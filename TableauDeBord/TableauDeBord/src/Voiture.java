@@ -1,5 +1,5 @@
 
-public class Tableau {
+public class Voiture {
 	private final double rayonRoue = 0.3;
 	private final double volumeReservoir = 70; //en litre
 	private boolean depart0 = false;
@@ -8,6 +8,7 @@ public class Tableau {
 	
 	public static void main(String[] args){
 		GestionTemps.getIntance();
+		TableauGUI.getInstance();
 		
 	}
 

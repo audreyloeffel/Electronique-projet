@@ -4,8 +4,8 @@ import java.util.Date;
 
 public class GestionTemps {
 	private static GestionTemps instance = null;
-	private Date depart = null;
-	private Date RAZ = null;
+	private long depart = 0;
+	private long RAZ = 0;
 	private long dateActuelle = 0;
 	private long chrono = 0;
 	
@@ -20,19 +20,19 @@ public class GestionTemps {
 		return instance;
 	}
 	
-	public Date getDepart() {
+	public long getDepart() {
 		return depart;
 	}
 
-	public Date getRAZ() {
+	public long getRAZ() {
 		return RAZ;
 	}
 
-	public Date getDateActuelle() {
+	public long getDateActuelle() {
 		return dateActuelle;
 	}
 
-	public Date getChrono() {
+	public long getChrono() {
 		return chrono;
 	}
 	public long getTempsParcours(){

@@ -15,7 +15,7 @@ public class UniteTraitementNumerique {
 	
 	private void calculVitesseMoyenne(){ // attention au valeurs!!!!
 		vitesseMoyenneRAZ = distParcourt;///chronoParcourt;
-		vitesseMoyenneTotal = distTotale///crhonovoiture
+		vitesseMoyenneTotal = distTotale;///crhonovoiture
 	}
 	
 	private void calculConsoMoy(){
