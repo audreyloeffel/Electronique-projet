@@ -8,6 +8,10 @@ import javax.swing.JPanel;
 
 public class TableauGUI extends JFrame{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private static TableauGUI instance = null;
 	private JLabel vInstantText = null;
 	

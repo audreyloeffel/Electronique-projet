@@ -13,6 +13,10 @@ public class UniteTraitementNumerique {
 	private double distTotale = 0;
 	private double distParcourt = 0;
 	
+	public UniteTraitementNumerique(){
+		
+	}
+	
 	private void calculVitesseMoyenne(){ // attention au valeurs!!!!
 		vitesseMoyenneRAZ = distParcourt;///chronoParcourt;
 		vitesseMoyenneTotal = distTotale;///crhonovoiture
