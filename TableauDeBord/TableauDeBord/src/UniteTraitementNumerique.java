@@ -1,4 +1,3 @@
-
 public class UniteTraitementNumerique {
 	private double vitesseInstantanee = 0;
 	private double vitesseMoyenneRAZ = 0;
@@ -12,24 +11,26 @@ public class UniteTraitementNumerique {
 	private double autonomie = 0;
 	private double distTotale = 0;
 	private double distParcourt = 0;
-	
-	public UniteTraitementNumerique(){
-		
+
+	public UniteTraitementNumerique() {
+
 	}
-	
-	private void calculVitesseMoyenne(){ // attention au valeurs!!!!
-		vitesseMoyenneRAZ = distParcourt;///chronoParcourt;
-		vitesseMoyenneTotal = distTotale;///crhonovoiture
+
+	private void calculVitesseMoyenneRAZ() {
+		vitesseMoyenneRAZ = kilometreRAZ
+				/ (GestionTemps.getIntance().getChronoRAZ() / (1000 * 3600));
 	}
-	
-	private void calculConsoMoy(){
-		consomationMoyenneRAZ = 1;
-		consomationMoyenneTotale = 1;
+
+	private void calculVitesseMoyenneTotale() {
+		vitesseMoyenneTotal = kilometreTotal
+				/ (GestionTemps.getIntance().getChronoZero() / (1000 * 3600));
 	}
-	
-	private void calculAutonomie(){ 
-		autonomie = 1;
+
+	private void calculConsoMoy() {
 	}
-	
-	
+
+	private void calculAutonomie() {
+
+	}
+
 }
