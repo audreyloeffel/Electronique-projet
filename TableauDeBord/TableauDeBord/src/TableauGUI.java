@@ -18,10 +18,17 @@ public class TableauGUI extends JFrame implements ActionListener {
 	
 	private static final long serialVersionUID = 1L;
 	private static TableauGUI instance = null;
-	private JLabel vInstantText = null;
+	private JLabel text = null;
+	private String measuresText = "";
+	private UniteTraitementNumerique uniteTraitement = null;
+	
+	
 	private JPanel panelGlobal = new JPanel();
 
 	private TableauGUI() {
+		
+		uniteTraitement= Voiture.getInstance().getUniteTraitementNumerirque();
+		updateString();
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		panelGlobal.setLayout(new BorderLayout());
 		JPanel control = createControlPanel();
@@ -53,8 +60,8 @@ public class TableauGUI extends JFrame implements ActionListener {
 	
 	public JPanel createMeasurePanel(){
 		JPanel measurePanel = new JPanel();
-		vInstantText = new JLabel("Vitesse instantanée: ?");
-		measurePanel.add(vInstantText);
+		text = new JLabel(measuresText);
+		measurePanel.add(text);
 		return measurePanel;
 	}
 
@@ -63,6 +70,19 @@ public class TableauGUI extends JFrame implements ActionListener {
 			instance = new TableauGUI();
 		}
 		return instance;
+	}
+	
+	private void updateString(){
+		measuresText = "Vitesse instantanée: " + uniteTraitement.getVitesseInstantanee() + " km/h \n" +
+				"Vitesse moyenne depuis 0: " + uniteTraitement.getVitesseMoyenneTotal() + " km/h \n" +
+				"Vitesse moyenne depuis RAZ: " + uniteTraitement.getVitesseMoyenneRAZ() + " km/h \n" +
+				"Kilomètrage depuis 0: " + uniteTraitement.getKilometreTotal() + " km \n" +
+				"Kilomètrage depuis RAZ; " + uniteTraitement.getKilometreRAZ() + " km \n" +
+				"Consommation instantanée: " + uniteTraitement.getConsomationIntantanee() + " l/100km \n" +
+				"Consommation moyenne depuis 0: " + uniteTraitement.getConsomationMoyenneTotale() + " l/100km \n" +
+				"Consommation moyenne depuis RAZ: " + uniteTraitement.getConsomationMoyenneRAZ() + " l/100km \n" +
+				"Autonomie: " + uniteTraitement.getAutonomie() + " km \n"
+				+ "...";
 	}
 
 	@Override

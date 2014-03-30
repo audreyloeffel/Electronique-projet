@@ -5,6 +5,7 @@ public class CapteurEffetHall {
 	private final int DELAY = 100;
 	private final int VITESSEMAX = 120;
 	private boolean isDriving = false;
+	private long pulsesInDelay = 0;
 
 	public CapteurEffetHall() {
 		
@@ -25,7 +26,12 @@ public class CapteurEffetHall {
 				while (isDriving) {
 					vitesse = Math.abs(Math.sin(x)) * VITESSEMAX;
 					x = x + 0.01;
-					System.out.println("vitesse instantanée: " + vitesse);
+					pulsesInDelay = (long) (vitesse/(2*Math.PI*Voiture.getInstance().getRayon())*DELAY/1000);
+//					System.out.println("vitesse instantanée: " + vitesse);
+//					pulses++;
+//					double frequence = pulses;
+//					kilometrageRAZ = pulses * 2 * Math.PI * Voiture.getInstance().getRayon();
+					
 					try {
 						Thread.sleep(DELAY);
 					} catch (InterruptedException e) {

@@ -3,16 +3,16 @@ public class GestionTemps {
 	private long chronoZero;
 	private long chronoRAZ;
 
-	private GestionTemps() {
+	public GestionTemps() {
 
 	}
 
-	public static GestionTemps getIntance() {
-		if (instance == null) {
-			instance = new GestionTemps();
-		}
-		return instance;
-	}
+//	public static GestionTemps getIntance() {
+//		if (instance == null) {
+//			instance = new GestionTemps();
+//		}
+//		return instance;
+//	}
 
 	public void startChronoZero() {
 		chronoZero = java.lang.System.currentTimeMillis();
