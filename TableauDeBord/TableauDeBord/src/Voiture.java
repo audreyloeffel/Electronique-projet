@@ -53,6 +53,7 @@ public class Voiture {
 
 	public static void main(String[] args) {
 		Voiture.getInstance();
+		interfaceGraphique.initWindow();
 	}
 
 	public void setDriving(boolean state) {
