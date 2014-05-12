@@ -13,27 +13,30 @@ public class UniteTraitementNumerique {
 	private double distParcourt = 0;
 	private final int DELAY = 500;
 	private boolean isRunning = false;
+	private Voiture instanceVoiture = null;
 
 	public UniteTraitementNumerique() {
-	
+
 	}
 
-	public void startTraitement(){
-		if(!isRunning){
+	public void startTraitement() {
+		if (!isRunning) {
 			traitement();
 			isRunning = true;
 			System.out.println("traitement lancé");
 		}
 	}
-	
-	private void traitement(){
+
+	private void traitement() {
 		new Thread(new Runnable() {
 			public void run() {
-
+				instanceVoiture = Voiture.getInstance();
 				while (true) {
 					calculVitesseInstantanee();
 					calculAutonomie();
-					calculConsoMoy();
+					calculConsoMoyRAZ();
+					calculConsoInstantanee();
+					calculConsoMoyTotal();
 					calculeKilometrageRAZ();
 					calculeKilometrageTotal();
 					calculVitesseMoyenneRAZ();
@@ -43,37 +46,54 @@ public class UniteTraitementNumerique {
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
+				}
+			}
+		}).start();
 	}
-			}}).start();
+
+	private void calculVitesseInstantanee() {
+		vitesseInstantanee = instanceVoiture.getCapteurEffetHall().getVitesse();
 	}
-	
-	private void calculVitesseInstantanee(){
-		vitesseInstantanee = Voiture.getInstance().getCapteurEffetHall().getVitesse();
-	}
-	
+
 	private void calculVitesseMoyenneRAZ() {
 		vitesseMoyenneRAZ = kilometreRAZ
-				/ (Voiture.getInstance().getGestionTemps().getChronoRAZ() / (1000 * 3600));
+				/ (instanceVoiture.getGestionTemps().getChronoRAZ() / (1000 * 3600));
 	}
 
 	private void calculVitesseMoyenneTotale() {
 		vitesseMoyenneTotal = kilometreTotal
-				/ (Voiture.getInstance().getGestionTemps().getChronoZero() / (1000 * 3600));
+				/ (instanceVoiture.getGestionTemps().getChronoZero() / (1000 * 3600));
 	}
 
 	private void calculeKilometrageRAZ() {
-
+		kilometreRAZ = instanceVoiture.getCapteurEffetHall().getPulsesInDelay()
+				* 2 * Math.PI * instanceVoiture.getRayon()
+				* instanceVoiture.getGestionTemps().getChronoRAZ()
+				* instanceVoiture.getCapteurEffetHall().getDelay();
 	}
 
 	private void calculeKilometrageTotal() {
+		kilometreTotal = instanceVoiture.getCapteurEffetHall().getPulsesInDelay()
+				* 2 * Math.PI * instanceVoiture.getRayon()
+				* instanceVoiture.getGestionTemps().getChronoZero()
+				* instanceVoiture.getCapteurEffetHall().getDelay();
 
 	}
 
-	private void calculConsoMoy() {
+	private void calculConsoMoyTotal() {
+		consomationMoyenneTotale = instanceVoiture.getCapteurInjecteur().getVolumeInjecte() / (vitesseMoyenneTotal * 1000*3600);
+	}
+	private void calculConsoInstantanee() {
+
+		consomationIntantanee = instanceVoiture.getCapteurInjecteur().getVolumeInjecte() / (vitesseInstantanee * 1000*3600);
+	}
+	private void calculConsoMoyRAZ() {
+
+		consomationMoyenneRAZ = instanceVoiture.getCapteurInjecteur().getVolumeInjecte() / (vitesseMoyenneRAZ * 1000*3600);
 	}
 
 	private void calculAutonomie() {
-
+		autonomie = consomationIntantanee / instanceVoiture.getCapteurJaugeEssence().getVolume();
 	}
 
 	public synchronized double getVitesseInstantanee() {

@@ -2,6 +2,8 @@ public class CapteurInjecteur {
 
 	private int volumeSeconde = 0;
 	private final int DELAY = 100;
+	private double x = 0;
+	private double volume = 0;
 
 	private boolean isDriving = false;
 
@@ -27,16 +29,22 @@ public class CapteurInjecteur {
 			public void run() {
 
 				while (isDriving) {
-					// TODO
+					volume = Math.sin(x) * 2 + 4;
 					try {
 						Thread.sleep(DELAY);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-
+					x = x + 0.1;
 				}
-				//TODO reset capteur
+				volume = 0;
+				x = 0;
 			}
 		}).start();
 	}
+
+	public double getVolumeInjecte() {
+		return volume;
+	}
+
 }

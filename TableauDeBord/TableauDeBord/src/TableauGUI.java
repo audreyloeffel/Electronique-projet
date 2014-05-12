@@ -24,6 +24,8 @@ public class TableauGUI extends JFrame implements ActionListener {
 	private String measuresText = "";
 	private UniteTraitementNumerique uniteTraitement = null;
 	private final int DELAY = 500;
+	private double nbTourTotal = 0;
+	private double nbTourRaz=0;
 
 	private JPanel panelGlobal = new JPanel();
 	int i =0;
@@ -33,7 +35,7 @@ public class TableauGUI extends JFrame implements ActionListener {
 	}
 
 	public void initWindow() {
-		uniteTraitement = Voiture.getInstance().getUniteTraitementNumerirque();
+		uniteTraitement = Voiture.getInstance().getUniteTraitementNumerique();
 		updateString();
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		panelGlobal.setLayout(new BorderLayout());
@@ -92,7 +94,7 @@ public class TableauGUI extends JFrame implements ActionListener {
 							+ uniteTraitement.getVitesseMoyenneRAZ() + " km/h \n"
 							+ "Kilomètrage depuis 0: "
 							+ uniteTraitement.getKilometreTotal() + " km \n"
-							+ "Kilomètrage depuis RAZ; "
+							+ "Kilomètrage depuis RAZ: "
 							+ uniteTraitement.getKilometreRAZ() + " km \n"
 							+ "Consommation instantanée: "
 							+ uniteTraitement.getConsomationIntantanee() + " l/100km \n"

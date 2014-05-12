@@ -37,4 +37,8 @@ public class CapteurJaugeEssence {
 			}
 		}).start();
 	}
+	
+	public synchronized double getVolume(){
+		return volume;
+	}
 }

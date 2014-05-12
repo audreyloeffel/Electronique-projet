@@ -27,6 +27,10 @@ public class CapteurEffetHall {
 		return pulsesInDelay;
 	}
 	
+	public int getDelay(){
+		return DELAY;
+	}
+	
 	
 	private void traitement() {
 		new Thread(new Runnable() {

@@ -79,7 +79,7 @@ public class Voiture {
 		return RAYON;
 	}
 
-	public UniteTraitementNumerique getUniteTraitementNumerirque() {
+	public UniteTraitementNumerique getUniteTraitementNumerique() {
 		return uniteTraitement;
 	}
 
@@ -88,6 +88,13 @@ public class Voiture {
 	}
 	public CapteurEffetHall getCapteurEffetHall(){
 		return capteurHall;
+	}
+	public CapteurInjecteur getCapteurInjecteur(){
+		return capteurInjecteur;
+	}
+	
+	public CapteurJaugeEssence getCapteurJaugeEssence(){
+		return capteurEssence;
 	}
 
 }
