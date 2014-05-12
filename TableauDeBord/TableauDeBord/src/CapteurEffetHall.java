@@ -20,6 +20,14 @@ public class CapteurEffetHall {
 		isDriving = false;
 	}
 
+	public double getVitesse(){
+		return vitesse;
+	}
+	public long getPulsesInDelay(){
+		return pulsesInDelay;
+	}
+	
+	
 	private void traitement() {
 		new Thread(new Runnable() {
 			public void run() {
@@ -31,7 +39,7 @@ public class CapteurEffetHall {
 //					pulses++;
 //					double frequence = pulses;
 //					kilometrageRAZ = pulses * 2 * Math.PI * Voiture.getInstance().getRayon();
-					
+					System.out.println(vitesse);
 					try {
 						Thread.sleep(DELAY);
 					} catch (InterruptedException e) {
@@ -40,6 +48,7 @@ public class CapteurEffetHall {
 
 				}
 				vitesse = 0;
+				x = 0;
 			}
 		}).start();
 

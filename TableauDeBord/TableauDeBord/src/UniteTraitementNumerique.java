@@ -11,10 +11,46 @@ public class UniteTraitementNumerique {
 	private double autonomie = 0;
 	private double distTotale = 0;
 	private double distParcourt = 0;
+	private final int DELAY = 500;
+	private boolean isRunning = false;
 
 	public UniteTraitementNumerique() {
+	
 	}
 
+	public void startTraitement(){
+		if(!isRunning){
+			traitement();
+			isRunning = true;
+			System.out.println("traitement lancé");
+		}
+	}
+	
+	private void traitement(){
+		new Thread(new Runnable() {
+			public void run() {
+
+				while (true) {
+					calculVitesseInstantanee();
+					calculAutonomie();
+					calculConsoMoy();
+					calculeKilometrageRAZ();
+					calculeKilometrageTotal();
+					calculVitesseMoyenneRAZ();
+					calculVitesseMoyenneTotale();
+					try {
+						Thread.sleep(DELAY);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+	}
+			}}).start();
+	}
+	
+	private void calculVitesseInstantanee(){
+		vitesseInstantanee = Voiture.getInstance().getCapteurEffetHall().getVitesse();
+	}
+	
 	private void calculVitesseMoyenneRAZ() {
 		vitesseMoyenneRAZ = kilometreRAZ
 				/ (Voiture.getInstance().getGestionTemps().getChronoRAZ() / (1000 * 3600));

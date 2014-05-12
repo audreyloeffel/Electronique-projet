@@ -29,5 +29,6 @@ public class GestionTemps {
 	public long getChronoRAZ() {
 		return chronoRAZ - java.lang.System.currentTimeMillis();
 	}
-
+	
+	
 }

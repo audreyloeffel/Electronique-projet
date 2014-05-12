@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -19,11 +20,13 @@ public class TableauGUI extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private static TableauGUI instance = null;
-	private JTextArea text = null;
+	private JTextArea text = new JTextArea("");
 	private String measuresText = "";
 	private UniteTraitementNumerique uniteTraitement = null;
+	private final int DELAY = 500;
 
 	private JPanel panelGlobal = new JPanel();
+	int i =0;
 
 	private TableauGUI() {
 
@@ -62,7 +65,7 @@ public class TableauGUI extends JFrame implements ActionListener {
 
 	public JPanel createMeasurePanel() {
 		JPanel measurePanel = new JPanel();
-		text = new JTextArea(measuresText);
+		//text = new JTextArea(measuresText);
 		measurePanel.add(text);
 		return measurePanel;
 	}
@@ -73,30 +76,54 @@ public class TableauGUI extends JFrame implements ActionListener {
 		}
 		return instance;
 	}
+	
 
-	private void updateString() {
-		measuresText = "Vitesse instantanée: "
-				+ uniteTraitement.getVitesseInstantanee() + " km/h \n"
-				+ "Vitesse moyenne depuis 0: "
-				+ uniteTraitement.getVitesseMoyenneTotal() + " km/h \n"
-				+ "Vitesse moyenne depuis RAZ: "
-				+ uniteTraitement.getVitesseMoyenneRAZ() + " km/h \n"
-				+ "Kilomètrage depuis 0: "
-				+ uniteTraitement.getKilometreTotal() + " km \n"
-				+ "Kilomètrage depuis RAZ; "
-				+ uniteTraitement.getKilometreRAZ() + " km \n"
-				+ "Consommation instantanée: "
-				+ uniteTraitement.getConsomationIntantanee() + " l/100km \n"
-				+ "Consommation moyenne depuis 0: "
-				+ uniteTraitement.getConsomationMoyenneTotale() + " l/100km \n"
-				+ "Consommation moyenne depuis RAZ: "
-				+ uniteTraitement.getConsomationMoyenneRAZ() + " l/100km \n"
-				+ "Autonomie: " + uniteTraitement.getAutonomie() + " km \n"
-				+ "...";
+
+	private synchronized void updateString() {
+		new Thread(new Runnable() {
+			public void run() {
+
+				while (true) {
+					measuresText = "Vitesse instantanée: "
+							+ uniteTraitement.getVitesseInstantanee() + " km/h \n"
+							+ "Vitesse moyenne depuis 0: "
+							+ uniteTraitement.getVitesseMoyenneTotal() + " km/h \n"
+							+ "Vitesse moyenne depuis RAZ: "
+							+ uniteTraitement.getVitesseMoyenneRAZ() + " km/h \n"
+							+ "Kilomètrage depuis 0: "
+							+ uniteTraitement.getKilometreTotal() + " km \n"
+							+ "Kilomètrage depuis RAZ; "
+							+ uniteTraitement.getKilometreRAZ() + " km \n"
+							+ "Consommation instantanée: "
+							+ uniteTraitement.getConsomationIntantanee() + " l/100km \n"
+							+ "Consommation moyenne depuis 0: "
+							+ uniteTraitement.getConsomationMoyenneTotale() + " l/100km \n"
+							+ "Consommation moyenne depuis RAZ: "
+							+ uniteTraitement.getConsomationMoyenneRAZ() + " l/100km \n"
+							+ "Autonomie: " + uniteTraitement.getAutonomie() + " km \n"
+							+ "..." + i;
+					
+					text.setText(measuresText);
+//					System.out.println(i);
+//					i++;
+					
+					try {
+						Thread.sleep(DELAY);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					}
+
+				}
+				// TODO reset capteur
+			
+		}).start();
+		
+		
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent event) {
+	public synchronized void actionPerformed(ActionEvent event) {
 		switch (event.getActionCommand()) {
 		case "Start": {
 			Voiture.getInstance().start();
@@ -107,6 +134,7 @@ public class TableauGUI extends JFrame implements ActionListener {
 			break;
 		}
 		case "Reset": {
+			Voiture.getInstance().reset();
 			break;
 		}
 		}

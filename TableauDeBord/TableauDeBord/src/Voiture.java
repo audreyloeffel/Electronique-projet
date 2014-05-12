@@ -14,8 +14,6 @@ public class Voiture {
 	public static Voiture getInstance() {
 		if (instance == null) {
 			instance = new Voiture();
-			System.out.println("instance voiture créée--------------------------------------------------------------");
-			System.out.println("instance voiture = " + instance.toString());
 		}
 
 		return instance;
@@ -31,24 +29,37 @@ public class Voiture {
 		capteurHall = new CapteurEffetHall();
 		capteurInjecteur = new CapteurInjecteur();
 		capteurEssence = new CapteurJaugeEssence();
+
+		uniteTraitement.startTraitement();
 		System.out.println("Capteurs crées");
 
 	}
 
 	public void start() {
+		if (!isDriving) {
+			capteurInjecteur.start();
+			capteurHall.start();
+			capteurEssence.start();
+			System.out.println("--- démarrage de la voiture ---");
+		}
+
 		isDriving = true;
-		capteurInjecteur.start();
-		capteurHall.start();
-		capteurEssence.start();
-		System.out.println("tous les capteurs lancés");
+
 	}
 
 	public void stop() {
-		isDriving = true;
+		isDriving = false;
 		capteurInjecteur.stop();
 		capteurEssence.stop();
 		capteurHall.stop();
-		System.out.println("tous les capteurs stopés");
+		System.out.println("--- Arrêt de la voiture ---");
+	}
+
+	public void reset() {
+		System.out.println("--- Remise à zéro ---");
+		gestionTemps.startChronoRAZ();
+		
+		
 	}
 
 	public static void main(String[] args) {
@@ -71,9 +82,12 @@ public class Voiture {
 	public UniteTraitementNumerique getUniteTraitementNumerirque() {
 		return uniteTraitement;
 	}
-	
-	public GestionTemps getGestionTemps(){
+
+	public GestionTemps getGestionTemps() {
 		return gestionTemps;
+	}
+	public CapteurEffetHall getCapteurEffetHall(){
+		return capteurHall;
 	}
 
 }
