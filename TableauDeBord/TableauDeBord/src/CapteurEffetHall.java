@@ -38,12 +38,6 @@ public class CapteurEffetHall {
 				while (isDriving) {
 					vitesse = Math.abs(Math.sin(x)) * VITESSEMAX;
 					x = x + 0.01;
-					pulsesInDelay = (long) (vitesse/(2*Math.PI*Voiture.getInstance().getRayon())*DELAY/1000);
-//					System.out.println("vitesse instantanée: " + vitesse);
-//					pulses++;
-//					double frequence = pulses;
-//					kilometrageRAZ = pulses * 2 * Math.PI * Voiture.getInstance().getRayon();
-					System.out.println(vitesse);
 					try {
 						Thread.sleep(DELAY);
 					} catch (InterruptedException e) {

@@ -58,6 +58,7 @@ public class Voiture {
 	public void reset() {
 		System.out.println("--- Remise à zéro ---");
 		gestionTemps.startChronoRAZ();
+		uniteTraitement.reset();
 		
 		
 	}
