@@ -37,6 +37,8 @@ public class Voiture {
 
 	public void start() {
 		if (!isDriving) {
+			gestionTemps.startChronoRAZ();
+			gestionTemps.startChronoZero();
 			capteurInjecteur.start();
 			capteurHall.start();
 			capteurEssence.start();
@@ -79,7 +81,11 @@ public class Voiture {
 	public double getRayon() {
 		return RAYON;
 	}
-
+	
+	public double getVolumeEssence(){
+		return VOLUMERESERVOIRE;
+	}
+	
 	public UniteTraitementNumerique getUniteTraitementNumerique() {
 		return uniteTraitement;
 	}

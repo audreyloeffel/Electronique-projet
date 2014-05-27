@@ -1,9 +1,8 @@
 public class CapteurInjecteur {
 
-	private int volumeSeconde = 0;
+	private double volumeSeconde = 0;
 	private final int DELAY = 100;
 	private double x = 0;
-	private double volume = 0;
 
 	private boolean isDriving = false;
 
@@ -29,22 +28,23 @@ public class CapteurInjecteur {
 			public void run() {
 
 				while (isDriving) {
-					volume = Math.sin(x) * 2 + 4;
+					volumeSeconde = 1*Math.abs(Math.sin(x))+1;
 					try {
 						Thread.sleep(DELAY);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-					x = x + 0.1;
+					x = x + 0.02;
+					System.out.println("x: " + x);
 				}
-				volume = 0;
+				volumeSeconde = 0;
 				x = 0;
 			}
 		}).start();
 	}
 
 	public double getVolumeInjecte() {
-		return volume;
+		return volumeSeconde;
 	}
 
 }

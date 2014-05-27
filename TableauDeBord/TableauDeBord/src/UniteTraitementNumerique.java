@@ -11,11 +11,10 @@ public class UniteTraitementNumerique {
 	private double autonomie = 0;
 	private double distTotale = 0;
 	private double distParcourt = 0;
-	private long nbTourTotal = 0;
-	private long nbTourRaz = 0;
 	private final int DELAY = 500;
 	private boolean isRunning = false;
 	private Voiture instanceVoiture = null;
+	private double totalEssence = 0;
 
 	public UniteTraitementNumerique() {
 
@@ -47,16 +46,16 @@ public class UniteTraitementNumerique {
 
 	private void calcul() {
 
-		// --- VITESSES ---
+		// --- VITESSES en km/h ---
 		vitesseInstantanee = instanceVoiture.getCapteurEffetHall().getVitesse();
 
-		vitesseMoyenneRAZ = kilometreRAZ
-				/ (instanceVoiture.getGestionTemps().getChronoRAZ() / (1000 * 3600));
+		vitesseMoyenneTotal = kilometreTotal * (3600000)
+				/ (instanceVoiture.getGestionTemps().getChronoRAZ());
 
-		vitesseMoyenneRAZ = kilometreRAZ
-				/ (instanceVoiture.getGestionTemps().getChronoRAZ() / (1000 * 3600));
+		vitesseMoyenneRAZ = kilometreRAZ * (3600000)
+				/ (instanceVoiture.getGestionTemps().getChronoRAZ());
 
-		// --- KILOMETRAGE ---
+		// --- KILOMETRAGE en km ---
 
 		kilometreRAZ = kilometreRAZ + ((double) DELAY) / 3600000
 				* vitesseInstantanee;
@@ -64,30 +63,37 @@ public class UniteTraitementNumerique {
 		kilometreTotal = kilometreTotal + ((double) DELAY) / 3600000
 				* vitesseInstantanee;
 
-		// --- CONSOMMATION ---
+		// --- CONSOMMATION en L/100km ---
+			
+		totalEssence = totalEssence
+				+ instanceVoiture.getCapteurInjecteur().getVolumeInjecte()
+				* DELAY / 1000000;
 
-		consomationMoyenneTotale = instanceVoiture.getCapteurInjecteur()
-				.getVolumeInjecte() / (vitesseMoyenneTotal * 1000 * 3600);
+		consomationMoyenneTotale = 100 * totalEssence / kilometreTotal;		
 
-		consomationIntantanee = instanceVoiture.getCapteurInjecteur()
-				.getVolumeInjecte() / (vitesseInstantanee * 1000 * 3600);
+		consomationMoyenneRAZ = 100 * totalEssence / kilometreRAZ;
 
-		consomationMoyenneRAZ = instanceVoiture.getCapteurInjecteur()
-				.getVolumeInjecte() / (vitesseMoyenneRAZ * 1000 * 3600);
+		System.out.println("capteur: " + instanceVoiture.getCapteurInjecteur().getVolumeInjecte());
+		consomationIntantanee = 360* instanceVoiture.getCapteurInjecteur().getVolumeInjecte()/(vitesseInstantanee);
+		System.out.println(consomationIntantanee);
+		System.out.println("rapport: " + instanceVoiture.getCapteurInjecteur().getVolumeInjecte()/vitesseInstantanee);
 
-		// --- AUTONOMIE ---
+		
+
+
+		// --- AUTONOMIE en h ---
 
 		autonomie = consomationIntantanee
 				/ instanceVoiture.getCapteurJaugeEssence().getVolume();
 
 	}
 
-	public synchronized void reset(){
+	public synchronized void reset() {
 		vitesseMoyenneRAZ = 0;
 		consomationMoyenneRAZ = 0;
 		kilometreRAZ = 0;
 	}
-	
+
 	public synchronized double getVitesseInstantanee() {
 		return vitesseInstantanee;
 	}

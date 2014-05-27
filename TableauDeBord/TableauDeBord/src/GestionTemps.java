@@ -23,11 +23,11 @@ public class GestionTemps {
 	}
 
 	public long getChronoZero() {
-		return chronoZero - java.lang.System.currentTimeMillis();
+		return java.lang.System.currentTimeMillis() - chronoZero;
 	}
 
 	public long getChronoRAZ() {
-		return chronoRAZ - java.lang.System.currentTimeMillis();
+		return java.lang.System.currentTimeMillis() - chronoRAZ;
 	}
 	
 	

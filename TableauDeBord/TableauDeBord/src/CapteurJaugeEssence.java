@@ -24,8 +24,9 @@ public class CapteurJaugeEssence {
 		new Thread(new Runnable() {
 			public void run() {
 
+				volume = (int) Voiture.getInstance().getVolumeEssence();
 				while (isDriving) {
-					// TODO
+					volume = volume - 1;
 					try {
 						Thread.sleep(DELAY);
 					} catch (InterruptedException e) {
@@ -33,7 +34,7 @@ public class CapteurJaugeEssence {
 					}
 
 				}
-				// TODO reset capteur
+		volume = (int) Voiture.getInstance().getVolumeEssence();
 			}
 		}).start();
 	}
