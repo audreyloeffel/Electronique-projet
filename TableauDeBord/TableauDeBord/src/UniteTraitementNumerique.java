@@ -52,7 +52,7 @@ public class UniteTraitementNumerique {
 		vitesseInstantanee = instanceVoiture.getCapteurEffetHall().getVitesse();
 
 		vitesseMoyenneTotal = kilometreTotal * (3600000)
-				/ (instanceVoiture.getGestionTemps().getChronoRAZ());
+				/ (instanceVoiture.getGestionTemps().getChronoZero());
 
 		vitesseMoyenneRAZ = kilometreRAZ * (3600000)
 				/ (instanceVoiture.getGestionTemps().getChronoRAZ());
