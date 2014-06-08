@@ -1,3 +1,4 @@
+
 public class UniteTraitementNumerique {
 	private double vitesseInstantanee = 0;
 	private double vitesseMoyenneRAZ = 0;
@@ -11,10 +12,11 @@ public class UniteTraitementNumerique {
 	private double autonomie = 0;
 	private double distTotale = 0;
 	private double distParcourt = 0;
-	private final int DELAY = 500;
+	private final int DELAY = 100;
 	private boolean isRunning = false;
 	private Voiture instanceVoiture = null;
 	private double totalEssence = 0;
+	private double totalRaz = 0;
 
 	public UniteTraitementNumerique() {
 
@@ -64,34 +66,39 @@ public class UniteTraitementNumerique {
 				* vitesseInstantanee;
 
 		// --- CONSOMMATION en L/100km ---
-			
-		totalEssence = totalEssence
-				+ instanceVoiture.getCapteurInjecteur().getVolumeInjecte()
-				* DELAY / 1000000;
+		
+		double essenceConsommee = instanceVoiture.getCapteurInjecteur().getVolumeInjecte()
+				* DELAY / 1000000;	
+		totalEssence = totalEssence + essenceConsommee ;
+		totalRaz = totalRaz + essenceConsommee; 
+		
 
 		consomationMoyenneTotale = 100 * totalEssence / kilometreTotal;		
 
-		consomationMoyenneRAZ = 100 * totalEssence / kilometreRAZ;
+		consomationMoyenneRAZ = 100 * totalRaz / kilometreRAZ;
 
-		System.out.println("capteur: " + instanceVoiture.getCapteurInjecteur().getVolumeInjecte());
 		consomationIntantanee = 360* instanceVoiture.getCapteurInjecteur().getVolumeInjecte()/(vitesseInstantanee);
-		System.out.println(consomationIntantanee);
-		System.out.println("rapport: " + instanceVoiture.getCapteurInjecteur().getVolumeInjecte()/vitesseInstantanee);
+				
 
+		// --- JAUGE ESSENCE ---
 		
-
-
+		volumeEssenceDisponible = instanceVoiture.getCapteurJaugeEssence().getVolume();
+		
 		// --- AUTONOMIE en h ---
 
-		autonomie = consomationIntantanee
-				/ instanceVoiture.getCapteurJaugeEssence().getVolume();
+		autonomie = 100* volumeEssenceDisponible /  consomationIntantanee;
 
+	
+		
 	}
+	
+	
 
 	public synchronized void reset() {
 		vitesseMoyenneRAZ = 0;
 		consomationMoyenneRAZ = 0;
 		kilometreRAZ = 0;
+		totalRaz = 0;
 	}
 
 	public synchronized double getVitesseInstantanee() {

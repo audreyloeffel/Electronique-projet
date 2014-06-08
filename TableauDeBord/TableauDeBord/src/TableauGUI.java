@@ -3,6 +3,8 @@ import java.awt.Dimension;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -21,6 +23,7 @@ public class TableauGUI extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private static TableauGUI instance = null;
 	private JTextArea text = new JTextArea("");
+	private JTextArea timeText = new JTextArea("");
 	private String measuresText = "";
 	private UniteTraitementNumerique uniteTraitement = null;
 	private final int DELAY = 500;
@@ -39,8 +42,10 @@ public class TableauGUI extends JFrame implements ActionListener {
 		panelGlobal.setLayout(new BorderLayout());
 		JPanel control = createControlPanel();
 		JPanel measure = createMeasurePanel();
+		JPanel time = createTimePanel();
 		panelGlobal.add(control, BorderLayout.NORTH);
 		panelGlobal.add(measure, BorderLayout.CENTER);
+		panelGlobal.add(time, BorderLayout.SOUTH);
 		getContentPane().add(panelGlobal);
 		setVisible(true);
 		setTitle("Tableau de bord");
@@ -65,9 +70,14 @@ public class TableauGUI extends JFrame implements ActionListener {
 
 	public JPanel createMeasurePanel() {
 		JPanel measurePanel = new JPanel();
-		// text = new JTextArea(measuresText);
 		measurePanel.add(text);
 		return measurePanel;
+	}
+	
+	public JPanel createTimePanel(){
+		JPanel timePanel = new JPanel();
+		timePanel.add(timeText);
+		return timePanel;
 	}
 
 	public static TableauGUI getInstance() {
@@ -83,37 +93,43 @@ public class TableauGUI extends JFrame implements ActionListener {
 
 				while (true) {
 					measuresText = "Vitesse instantanée: "
-							+ (int) uniteTraitement.getVitesseInstantanee()
+							+ formatString(uniteTraitement.getVitesseInstantanee())
 							+ " km/h \n"
 							+ "Vitesse moyenne depuis 0: "
-							+ (int) uniteTraitement.getVitesseMoyenneTotal()
+							+ formatString( uniteTraitement.getVitesseMoyenneTotal())
 							+ " km/h \n"
 							+ "Vitesse moyenne depuis RAZ: "
-							+ (int) uniteTraitement.getVitesseMoyenneRAZ()
+							+ formatString(uniteTraitement.getVitesseMoyenneRAZ())
 							+ " km/h \n \n"
 							+ "Kilomètrage depuis 0: "
-							+ uniteTraitement.getKilometreTotal()
+							+ formatString(uniteTraitement.getKilometreTotal())
 							+ " km \n"
 							+ "Kilomètrage depuis RAZ: "
-							+ uniteTraitement.getKilometreRAZ()
+							+ formatString(uniteTraitement.getKilometreRAZ())
 							+ " km \n \n"
 							+ "Consommation instantanée: "
-							+ (int) uniteTraitement.getConsomationIntantanee()
+							+ formatString(uniteTraitement.getConsomationIntantanee())
 							+ " l/100km \n"
 							+ "Consommation moyenne depuis 0: "
-							+ (int) uniteTraitement
-									.getConsomationMoyenneTotale()
+							+ formatString(uniteTraitement
+									.getConsomationMoyenneTotale())
 							+ " l/100km \n"
 							+ "Consommation moyenne depuis RAZ: "
-							+ (int) uniteTraitement.getConsomationMoyenneRAZ()
-							+ " l/100km \n \n" + "Autonomie: "
-							+ (int) uniteTraitement.getAutonomie() + " km \n"
-							+ "..." + i;
+							+ formatString(uniteTraitement.getConsomationMoyenneRAZ())
+							+ " l/100km \n \n" 
+							+ "Autonomie: "
+							+ formatString(uniteTraitement.getAutonomie()) + " km \n"
+							+ "Jauge essence: " + formatString(uniteTraitement.getVolumeEssenceDisponible())
+							+ " litres restants";
 
 					text.setText(measuresText);
-					// System.out.println(i);
-					// i++;
-
+					
+					String timetxt = "Date: " + new Date(java.lang.System.currentTimeMillis()) + "\n"
+							+ "Dernière remise à zéro il y a : " + Voiture.getInstance().getGestionTemps().getChronoRAZ()/1000 + " s \n";  
+							
+					
+					timeText.setText(timetxt);
+					
 					try {
 						Thread.sleep(DELAY);
 					} catch (InterruptedException e) {
@@ -122,12 +138,18 @@ public class TableauGUI extends JFrame implements ActionListener {
 				}
 
 			}
-			// TODO reset capteur
+			
 
 		}).start();
 
 	}
 
+	public String formatString(double n){
+		DecimalFormat df = new DecimalFormat("0.00");
+		return df.format(n);
+		
+	}
+	
 	@Override
 	public synchronized void actionPerformed(ActionEvent event) {
 		switch (event.getActionCommand()) {

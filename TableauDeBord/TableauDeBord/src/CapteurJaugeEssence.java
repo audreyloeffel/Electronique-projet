@@ -1,5 +1,5 @@
 public class CapteurJaugeEssence {
-	private int volume = 0;
+	private double volume = 0;
 	private final int DELAY = 100;
 	private boolean isDriving = false;
 
@@ -24,9 +24,13 @@ public class CapteurJaugeEssence {
 		new Thread(new Runnable() {
 			public void run() {
 
-				volume = (int) Voiture.getInstance().getVolumeEssence();
+				volume = Voiture.getInstance().getVolumeEssence();
 				while (isDriving) {
-					volume = volume - 1;
+					volume = volume - 0.001;
+					if (volume < 10) {
+						volume = Voiture.getInstance().getVolumeEssence();
+						System.out.println("Plein effectué");
+					}
 					try {
 						Thread.sleep(DELAY);
 					} catch (InterruptedException e) {

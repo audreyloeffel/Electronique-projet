@@ -1,6 +1,6 @@
 public class Voiture {
 	private final double RAYON = 0.3;
-	private final double VOLUMERESERVOIRE = 70;
+	private final double VOLUMERESERVOIRE = 50;
 
 	private static GestionTemps gestionTemps;
 	private static TableauGUI interfaceGraphique;
@@ -85,7 +85,7 @@ public class Voiture {
 	public double getVolumeEssence(){
 		return VOLUMERESERVOIRE;
 	}
-	
+		
 	public UniteTraitementNumerique getUniteTraitementNumerique() {
 		return uniteTraitement;
 	}

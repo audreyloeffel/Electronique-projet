@@ -5,7 +5,7 @@ public class CapteurEffetHall {
 	private final int DELAY = 100;
 	private final int VITESSEMAX = 120;
 	private boolean isDriving = false;
-	private long pulsesInDelay = 0;
+//	private long pulsesInDelay = 0;
 
 	public CapteurEffetHall() {
 		
@@ -23,9 +23,9 @@ public class CapteurEffetHall {
 	public double getVitesse(){
 		return vitesse;
 	}
-	public long getPulsesInDelay(){
-		return pulsesInDelay;
-	}
+//	public long getPulsesInDelay(){
+//		return pulsesInDelay;
+//	}
 	
 	public int getDelay(){
 		return DELAY;

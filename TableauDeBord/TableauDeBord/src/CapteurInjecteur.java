@@ -28,14 +28,14 @@ public class CapteurInjecteur {
 			public void run() {
 
 				while (isDriving) {
-					volumeSeconde = 1*Math.abs(Math.sin(x))+1;
+					volumeSeconde = 0.2*Math.abs(Math.sin(x))+1.5;
 					try {
 						Thread.sleep(DELAY);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
 					x = x + 0.02;
-					System.out.println("x: " + x);
+					
 				}
 				volumeSeconde = 0;
 				x = 0;
